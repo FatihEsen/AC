@@ -1,0 +1,68 @@
+{
+  "udp": {
+    "host": "localhost",
+    "port": 9996,
+    "timeout": 1.0,
+    "buffer_size": 4096
+  },
+  "controls": {
+    "host": "localhost",
+    "port": 9997,
+    "enabled": true
+  },
+  "window": {
+    "geometry": "1200x800",
+    "fullscreen": false,
+    "always_on_top": false,
+    "theme": "dark"
+  },
+  "display": {
+    "update_rate": 20,
+    "units": {
+      "speed": "kmh",
+      "temperature": "celsius",
+      "pressure": "bar"
+    },
+    "precision": {
+      "speed": 0,
+      "temperature": 0,
+      "pressure": 1,
+      "time": 3
+    }
+  },
+  "widgets": {
+    "enabled": {
+      "speed": true,
+      "rpm": true,
+      "gear": true,
+      "lap_time": true,
+      "tires": true,
+      "gforce": true,
+      "fuel": true,
+      "temperature": true,
+      "connection": true
+    },
+    "positions": {},
+    "sizes": {}
+  },
+  "logging": {
+    "enabled": false,
+    "directory": "logs",
+    "format": "csv",
+    "max_file_size": 100,
+    "max_files": 10
+  },
+  "alerts": {
+    "low_fuel_threshold": 5.0,
+    "high_temperature_threshold": 105.0,
+    "tire_pressure_min": 24.0,
+    "tire_pressure_max": 32.0,
+    "sound_enabled": true
+  },
+  "advanced": {
+    "csp_support": true,
+    "extended_telemetry": true,
+    "debug_mode": false,
+    "performance_mode": false
+  }
+}

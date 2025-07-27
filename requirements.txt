@@ -1,0 +1,23 @@
+# AC Telemetry Dashboard Requirements
+# Python 3.8+ required
+
+# Core dependencies
+tkinter  # Usually included with Python
+typing-extensions>=4.0.0
+
+# Optional dependencies for enhanced features
+numpy>=1.21.0  # For advanced telemetry calculations
+matplotlib>=3.5.0  # For optional data visualization
+Pillow>=8.0.0  # For image handling in GUI
+
+# Development dependencies (optional)
+pytest>=6.0.0  # For testing
+black>=22.0.0  # For code formatting
+flake8>=4.0.0  # For linting
+
+# Platform-specific dependencies
+# Windows
+pywin32>=227; sys_platform == "win32"  # For Windows-specific features
+
+# Linux
+# No specific requirements, uses standard libraries
