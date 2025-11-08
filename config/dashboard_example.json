@@ -49,6 +49,15 @@
     "enabled": false,
     "directory": "logs",
     "format": "csv",
+    "columns": [
+      "lap_time",
+      "speed_kmh",
+      "rpm",
+      "gear",
+      "fuel",
+      "g_force_lateral",
+      "g_force_longitudinal"
+    ],
     "max_file_size": 100,
     "max_files": 10
   },
