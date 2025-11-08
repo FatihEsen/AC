@@ -11,6 +11,7 @@ import socket
 import struct
 import threading
 import time
+import csv
 from datetime import datetime
 from typing import Dict, Any, Optional, Tuple
 import tkinter as tk
@@ -46,6 +47,10 @@ class ACTelemetryDashboard:
         self.current_data = {}
         self.last_update = None
         
+        # Logging
+        self.log_file = None
+        self.csv_writer = None
+
         # GUI
         self.root = None
         self.main_window = None
@@ -163,15 +168,31 @@ class ACTelemetryDashboard:
             log_config = self.config.get('logging', {})
             if not log_config.get('enabled', False):
                 return
+
+            # Initialize CSV writer on first call
+            if self.csv_writer is None:
+                log_dir = log_config.get('directory', 'logs')
+                os.makedirs(log_dir, exist_ok=True)
                 
-            log_dir = log_config.get('directory', 'logs')
-            os.makedirs(log_dir, exist_ok=True)
+                timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                log_path = os.path.join(log_dir, f'telemetry_{timestamp}.csv')
+
+                self.log_file = open(log_path, 'w', newline='', encoding='utf-8')
+
+                # Get headers from config or use all keys
+                log_columns = log_config.get('columns', list(data.keys()))
+
+                self.csv_writer = csv.DictWriter(self.log_file, fieldnames=log_columns)
+                self.csv_writer.writeheader()
             
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            log_file = os.path.join(log_dir, f'telemetry_{timestamp}.csv')
-            
-            # TODO: Implement CSV logging
-            
+            # Filter data to only include specified columns
+            log_data = {k: data.get(k) for k in self.csv_writer.fieldnames}
+
+            # Write data to CSV
+            if self.csv_writer:
+                self.csv_writer.writerow(log_data)
+                self.log_file.flush()
+
         except Exception as e:
             self.logger.error(f"Failed to log telemetry data: {e}")
     
@@ -248,6 +269,10 @@ class ACTelemetryDashboard:
             
             if self.udp_socket:
                 self.udp_socket.close()
+
+            # Close log file
+            if self.log_file:
+                self.log_file.close()
                 
             self.logger.info("Dashboard cleanup completed")
             
